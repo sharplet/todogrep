@@ -16,6 +16,9 @@
 #                    - 'find'      Recursively search the current directory for files.
 #                    - 'default'   This is the default value, which tries to use 'git' when inside a git repository, and falls back to 'find'.
 
+script_name=${BASH_SOURCE[0]/$PWD\//}
+script_name=${script_name/\.\//}
+
 ## Finding files
 
 find_files() {
@@ -33,7 +36,7 @@ find_files() {
   elif [ "${search_mode}" = "find" ]; then
     find . -type f | sed 's/^.\///'
   else
-    echo "todogrep: unsupported file search mode '${search_mode}'" >&2
+    echo "${script_name}: unsupported file search mode '${search_mode}'" >&2
     exit 1
   fi
 }
@@ -65,7 +68,7 @@ format_results() {
       cat
       ;;
     *)
-      echo "todogrep: unsupported format mode '${mode}'" >&2
+      echo "${script_name}: unsupported format mode '${mode}'" >&2
       exit 1
       ;;
   esac
@@ -90,7 +93,7 @@ fail_on_output() {
 ## Main
 
 declare -a includes
-declare -a excludes=("-e" "^(\\.\\/)?todogrep")
+declare -a excludes=("-e" "^(\\.\\/)?${script_name}")
 declare format_mode="none"
 declare search_mode="default"
 declare keywords="FIXME:|TODO:"
