@@ -124,7 +124,7 @@ find_files ${search_mode} \
   | accept_paths ${includes[*]} \
   | reject_paths ${excludes[*]} \
   | nullify \
-  | xargs -0 -I{} bash -c "egrep --directories=skip --with-filename --line-number --only-matching '[[:space:]]?($keywords).*$' {} || true" \
+  | xargs -0 egrep --directories=skip --with-filename --line-number --only-matching "[[:space:]]?($keywords).*$" \
   | format_results ${format_mode} ${keywords} \
   | fail_on_output
 
