@@ -16,8 +16,7 @@
 #                    - 'find'      Recursively search the current directory for files.
 #                    - 'default'   This is the default value, which tries to use 'git' when inside a git repository, and falls back to 'find'.
 
-script_name=${BASH_SOURCE[0]/$PWD\//}
-script_name=${script_name/\.\//}
+script_name=$(basename ${BASH_SOURCE[0]})
 
 ## Finding files
 
@@ -93,7 +92,7 @@ fail_on_output() {
 ## Main
 
 declare -a includes
-declare -a excludes=("-e" "^(\\.\\/)?${script_name}")
+declare -a excludes=("-e" "/?${script_name}$")
 declare format_mode="none"
 declare search_mode="default"
 declare keywords="FIXME:|TODO:"
