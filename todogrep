@@ -118,8 +118,6 @@ done
 
 shift $((OPTIND - 1))
 
-set -o pipefail
-
 find_files ${search_mode} \
   | accept_paths ${includes[*]} \
   | reject_paths ${excludes[*]} \
